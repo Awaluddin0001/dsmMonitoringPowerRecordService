@@ -1,13 +1,20 @@
 import express from "express";
 import cors from "cors";
-import connectDB from "./config/mongoDb";
-import powerMeter from "./routes/powersMeter";
-import manual from "./routes/input";
+import connectDB from "../config/mongoDb";
+import powerMeter from "../routes/powersMeter";
+import manual from "../routes/input";
+import https from "https";
+import fs from "fs";
+import path from "path";
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// const hostname = "192.168.1.62"; // Specify the host you want
+// Load SSL certificates
+const sslOptions = {
+  key: fs.readFileSync(path.resolve(__dirname, "../selfsigned.key")),
+  cert: fs.readFileSync(path.resolve(__dirname, "../selfsigned.crt")),
+};
 
 const hostname = "0.0.0.0"; // Specify the host you want
 
@@ -26,8 +33,10 @@ app.use("/api/v1/monitoring/manual/add/", manual);
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(Number(port), hostname, () => {
-      console.log(`Server running on port ${port}`);
+
+    // Create HTTPS server
+    https.createServer(sslOptions, app).listen(Number(port), hostname, () => {
+      console.log(`HTTPS Server running on https://0.0.0.0:${port}`);
     });
   } catch (err) {
     console.error("Failed to connect to MongoDB:", err);

@@ -5,6 +5,7 @@
   "main": "server.ts",
   "scripts": {
     "start": "cross-env NODE_ENV=production ts-node src/server.ts",
+    "startlocal": "cross-env NODE_ENV=production ts-node src/server.ts --host 192.168.1.62",
     "dev": "cross-env NODE_ENV=development nodemon --exec ts-node src/server.ts",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
@@ -18,9 +19,11 @@
     "axios": "^1.7.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
     "express": "^4.19.2",
     "moment-timezone": "^0.5.45",
     "mongoose": "^8.4.4",
+    "mysql2": "^3.10.2",
     "node-cron": "^3.0.3"
   },
   "devDependencies": {

@@ -253,5 +253,9 @@ const PowerMeterDataSchema = new Schema({
 export const getPowerMeterModel = (
   collectionName: string
 ): Model<IPowerMeterData> => {
-  return model<IPowerMeterData>(collectionName, PowerMeterDataSchema);
+  return model<IPowerMeterData>(
+    collectionName,
+    PowerMeterDataSchema,
+    collectionName
+  );
 };
